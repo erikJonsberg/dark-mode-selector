@@ -37,7 +37,7 @@ const themeOptions: ThemeOption[] = [
 	},
 ];
 
-export default function DarkModeSelect() {
+export default function DarkModeSelector() {
 	const [selected, setSelected] = useState<ThemeOption | null>(null);
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
