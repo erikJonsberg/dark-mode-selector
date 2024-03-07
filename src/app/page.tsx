@@ -1,4 +1,4 @@
-import DarkModeSelector from "@/components/dark-mode-selector";
+import DarkModeSelector from "@/components/DarkModeSelector";
 
 export default function Home() {
 	return (
@@ -6,8 +6,8 @@ export default function Home() {
 			<div className='flex w-full justify-center'>
 				<DarkModeSelector />
 			</div>
-			<div className='flex flex-grow items-center justify-center'>
-				<h1 className='text-6xl font-bold'>Dark Mode Select</h1>
+			<div className='relative flex flex-grow items-center justify-center'>
+				<h1 className='text-6xl font-bold'>Dark Mode Selector</h1>
 			</div>
 		</main>
 	);

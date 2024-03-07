@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
 	SunIcon,
 	MoonIcon,
@@ -16,30 +16,30 @@ function classNames(...classes: string[]) {
 type ThemeOption = {
 	id: string;
 	name: string;
-	icon: any;
+	icon: React.ReactNode;
 };
 
 const themeOptions: ThemeOption[] = [
 	{
 		id: "light",
 		name: "Light",
-		icon: <SunIcon className='h-5 w-5' />,
+		icon: <SunIcon className='size-5' />,
 	},
 	{
 		id: "dark",
 		name: "Dark",
-		icon: <MoonIcon className='h-5 w-5' />,
+		icon: <MoonIcon className='size-5' />,
 	},
 	{
 		id: "system",
 		name: "System",
-		icon: <ComputerDesktopIcon className='h-5 w-5' />,
+		icon: <ComputerDesktopIcon className='size-5' />,
 	},
 ];
 
 export default function DarkModeSelector() {
 	const [selected, setSelected] = useState<ThemeOption | null>(null);
-	const { theme, setTheme } = useTheme();
+	const { setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
@@ -61,33 +61,33 @@ export default function DarkModeSelector() {
 
 	if (!mounted) {
 		return null;
-	}
-
-	return (
-		<Listbox value={selected} onChange={setSelected}>
-			{({ open }) => (
-				<>
+	} else {
+		return (
+			<Listbox value={selected} onChange={setSelected}>
+				{({ open }) => (
 					<div className='relative'>
 						<Listbox.Button className='flex items-center'>
 							<MoonIcon
-								className='h-5 w-5 text-gray-900 dark:text-gray-50 hidden dark:inline'
+								className='size-5 text-gray-900 dark:text-gray-50 hidden dark:inline'
 								aria-hidden='true'
 							/>
 
 							<SunIcon
-								className='h-5 w-5 text-gray-900 dark:text-gray-50 dark:hidden'
+								className='size-5 text-gray-900 dark:text-gray-50 dark:hidden'
 								aria-hidden='true'
 							/>
 						</Listbox.Button>
 
 						<Transition
 							show={open}
-							as={Fragment}
+							enter='transition ease-out duration-100'
+							enterFrom='opacity-0'
+							enterTo='opacity-100'
 							leave='transition ease-in duration-100'
 							leaveFrom='opacity-100'
 							leaveTo='opacity-0'
 						>
-							<Listbox.Options className='absolute z-50 top-full list-none right-0 bg-white rounded-lg ring-1 ring-slate-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 mt-8'>
+							<Listbox.Options className='absolute z-50 top-full list-none right-0 bg-white rounded-lg ring-1 ring-slate-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm dark:bg-slate-800 dark:ring-0 mt-8'>
 								{themeOptions.map((themeOption) => (
 									<Listbox.Option
 										key={themeOption.id}
@@ -105,29 +105,27 @@ export default function DarkModeSelector() {
 										value={themeOption}
 									>
 										{({ selected }) => (
-											<>
-												<div className='py-1 px-2 flex items-center cursor-pointer'>
-													<span className='flex-shrink-0 mr-4 font-semibold'>
-														{themeOption.icon}
-													</span>
-													<span
-														className={classNames(
-															selected ? "font-semibold" : "font-normal",
-															"ml-3 block"
-														)}
-													>
-														{themeOption.name}
-													</span>
-												</div>
-											</>
+											<div className='py-1 px-2 flex items-center cursor-pointer'>
+												<span className='flex-shrink-0 mr-4 font-semibold'>
+													{themeOption.icon}
+												</span>
+												<span
+													className={classNames(
+														selected ? "font-semibold" : "font-normal",
+														"ml-3 block"
+													)}
+												>
+													{themeOption.name}
+												</span>
+											</div>
 										)}
 									</Listbox.Option>
 								))}
 							</Listbox.Options>
 						</Transition>
 					</div>
-				</>
-			)}
-		</Listbox>
-	);
+				)}
+			</Listbox>
+		);
+	}
 }
